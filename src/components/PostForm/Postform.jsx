@@ -10,6 +10,7 @@ function Postform({post}) {
     const navigate = useNavigate()
     const[error,setError] = useState()
     const userData = useSelector((state)=> state.auth.userData)
+    console.log(userData);
     const {register,handleSubmit,watch,setValue,} = useForm({
         defaultValues:{
             title : post?.title || '',            
@@ -33,10 +34,13 @@ function Postform({post}) {
   const formsubmit = async(data)=>{
       try {
         if (data) {
+            console.log(data.image[0]);
             const file = await service.uploadFile(data.image[0])
             if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
+                data.username = userData.name;
+                console.log(data);
                 const userId = userData ? userData.$id : null;
                   const post = await service.createPost({...data , userId })
                   if (post) {
@@ -51,7 +55,7 @@ function Postform({post}) {
       }
     }
   return (
-    <div className="max-w-3xl mx-auto mt-8 px-1">
+    <div className="post-form max-w-3xl mx-auto mt-8 px-1">
       <div className="bg-green-200 p-4 rounded-md mb-4">
       <p className="text-sm">⚠️ Avoid special characters in the title for a smoother experience. Updates for more flexibility coming soon!</p>
 

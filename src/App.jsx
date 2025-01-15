@@ -1,7 +1,7 @@
 import './App.css'
 import { Header } from './components/header/Header'
 import Footer from './components/footer/Footer'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import authService from './appwrite/auth'
@@ -20,12 +20,16 @@ function App() {
     })
     .finally(() => setLoading(false))
   }, [])
-  
+  const location = useLocation();
+  const searchNavLink = document.querySelector(".search");
+  if (searchNavLink && location.pathname === "/search") {
+    searchNavLink.style.color = "#5abcb2";
+  }
+
   return !loading ? (
       <>
         <Header />
         <Outlet />
-        <Footer />
      </>
         ) : null
 }

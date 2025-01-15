@@ -1,32 +1,43 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { login as authLogin } from '../store/authSlice'
 import {useDispatch, useSelector} from "react-redux"
 import authService from "../appwrite/auth"
 import {useForm} from "react-hook-form"
-
+const Loading = () => (
+  <div className="flex justify-center items-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+    <span className="ml-2 text-gray-900">Logging In...</span>
+  </div>
+);
 function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false);
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
-
+   
     const login = async(data) => {
         setError("")
         try {
+          setLoading(true);
             const session = await authService.login(data)
             if (session) {
                 const userData = await authService.getCurrentUser()
                 if (userData) dispatch(authLogin({ userData }));
+                setLoading(false);
                 navigate("/")
+
             }
         } catch (error) {
             setError(error.message)
+            setLoading(false);
         }
     }
 
   return (
-    <section class="h-screen rounded-md">
+
+    <section class="main-container h-screen rounded-md">
 
       <div class="flex items-center justify-center bg-white px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
         <div class="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
@@ -93,6 +104,7 @@ function Login() {
                 </div>
               </div>
               <div>
+              {loading ? <Loading /> : 
                 <button
                   type="submit"
                   class="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
@@ -113,7 +125,7 @@ function Login() {
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
-                </button>
+                </button>}
               </div>
             </div>
           </form>

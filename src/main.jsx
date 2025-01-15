@@ -14,6 +14,14 @@ import Postform from './components/PostForm/Postform.jsx'
 import ViewBlog from './components/ViewBlog.jsx'
 import HomeViewBlog from './components/HomeViewBlog.jsx'
 import Edit from './components/edit/Edit.jsx'
+import Profile from './components/Profile/Profile.jsx'
+import UserProfile from './components/UserProfile/UserProfile.jsx'
+import EditProfile from './components/Profile/EditProfile.jsx'
+import Search_sm from './components/search/Search_sm.jsx'
+import Postform1 from './components/PostForm/Postform1.jsx'
+import Chatting from './components/chatting/Chatting.jsx'
+import Chatting_mobile from './components/chatting/Chatting_mobile.jsx'
+import DeptMessage from './components/chatting/DeptMessage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,7 +31,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element:(
-          <Home />
+          <Home  />
         ),
         
       },
@@ -58,6 +66,15 @@ const router = createBrowserRouter([
         ),
       }, 
       {
+        path: "/create-post1",
+        element:(
+          <Protection>
+            <Postform1 />   
+          </Protection>
+            
+        ),
+      }, 
+      {
         path : "/all-Blog/:id",
         element:(
           <Protection>
@@ -77,7 +94,49 @@ const router = createBrowserRouter([
         element:(
           <Edit/>
         )
-      } ,      
+      } ,    
+      {
+        path:"/profile",
+        element:(
+          <Profile />
+        )
+      },
+      {
+        path:"/profile/:id",
+        element:(
+          <UserProfile />
+        )
+      },
+      {
+        path: "/editProfile",
+        element:(
+          <EditProfile />
+        )
+      },
+      {
+        path: "/search",
+        element:(
+          <Search_sm />
+        )
+      },
+      {
+        path: "/chatting",
+        element:(
+          <Chatting />
+        )
+      },
+      {
+        path: "/Chatting_mobile",
+        element:(
+          <Chatting_mobile />
+        )
+      },
+      {
+        path: "/DeptMessage/:id",
+        element:(
+          <DeptMessage />
+        )
+      },
     ]
   }
 ])

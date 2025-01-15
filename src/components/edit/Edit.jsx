@@ -62,14 +62,16 @@ function Edit() {
                 
                 }
                 else if(data){
-                    const updating = await service.updatePost(post.$id, { ...data });
+                     await service.updatePost(post.$id, { ...data }).then((data)=>{
+                        if (data) {
+                            // Assuming navigate is a function for navigation
+                            navigate("/");
+                        } else {
+                            console.log('Failed to update post.');
+                        }
+                    });
         
-                    if (updating) {
-                        // Assuming navigate is a function for navigation
-                        navigate("/");
-                    } else {
-                        console.log('Failed to update post.');
-                    }
+                    
                 }
                 else {
                     console.log('No image selected.');

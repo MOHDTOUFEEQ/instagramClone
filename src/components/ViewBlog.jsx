@@ -21,7 +21,7 @@ function ViewBlog() {
                 setLoading(false);
             });
     }, [id]);
-
+    
     const handleDelete = () => {
         service.deletePost(id).then(() => service.deleteFile(post.featuredImage)).then(()=>navigate("/"));
     };
@@ -35,7 +35,7 @@ function ViewBlog() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto my-8 p-6 bg-white shadow-md rounded-md">
+        <div className="main-container max-w-2xl mx-auto my-8 p-6 bg-white shadow-md rounded-md">
             <img
                 src={service.getFilePreview(post.featuredImage)}
                 alt="Featured"
