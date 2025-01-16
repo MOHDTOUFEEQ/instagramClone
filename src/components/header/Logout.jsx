@@ -1,11 +1,13 @@
 import { useDispatch } from 'react-redux'
 import { logout } from '../../store/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import authService from '../../appwrite/auth'
 function Logout() {
     const dispatch  = useDispatch()
     const navigate = useNavigate()
     const doingLogout = ()=>{
+        console.log("hii");
+        
         authService.logout().then(()=>{
             dispatch(logout())
             navigate("/")
@@ -18,10 +20,10 @@ function Logout() {
         <button onClick={doingLogout}> 
         <span className='logout_a'>
               <li className="nav__item">
-                  <a href="" className="nav__link">
+                  <Link  className="nav__link">
                       <i className='bx bx-message-square-detail nav__icon'></i>
                       <span className="nav__name">Logout</span>
-                  </a>
+                  </Link>
               </li>
           </span>
            </button>

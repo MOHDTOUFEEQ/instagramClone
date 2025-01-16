@@ -3,6 +3,7 @@ import service from '../../appwrite/config';
 import { useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 import CommentComponent from './CommentComponent';
+import { Link } from 'react-router-dom';
 
 function Postcard({ post = {} }) {
   const userData = useSelector((state) => state.auth.userData);
@@ -92,7 +93,7 @@ function Postcard({ post = {} }) {
       <div className="bg-gray-100 p-4">
         <div className="bg-white border rounded-sm max-w-md">
           {/* Post Header */}
-          <a href={`/profile/${post.userId}`}>
+          <Link to={`/profile/${post.userId}`}>
             <div className="flex items-center px-4 py-3">
               <img
                 className="h-8 w-8 rounded-full"
@@ -110,7 +111,7 @@ function Postcard({ post = {} }) {
                 <span className="text-gray-600 text-xs block">{post.title}</span>
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* Post Image */}
           <div style={{ position: "relative", overflow: "hidden", maxHeight: "450px" }}>

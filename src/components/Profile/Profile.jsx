@@ -421,7 +421,7 @@ function Profile() {
                       uppercase tracking-widest font-semibold text-xs text-gray-600
                       border-t">
               <li className={` ${showTagged ? "md:border-t" : ""} cursor-pointer md:border-gray-700 md:-mt-px md:text-gray-700`}>
-                <a
+                <Link
                   className="inline-block p-3"
                   onClick={() => { setShowTagged(true) }}
                 >
@@ -429,7 +429,7 @@ function Profile() {
                 <i className=" fas fa-th-large text-xl md:hidden  xl:hidden lg:hidden"><FontAwesomeIcon icon={faCamera} className="text-xl" /></i>
                 <span className="hidden xl:inline md:inline">post</span>
 
-                </a>
+                </Link>
               </li>
               <li className={` ${!showTagged ? "md:border-t" : ""} cursor-pointer md:border-gray-700 md:-mt-px md:text-gray-700`}>
               <a

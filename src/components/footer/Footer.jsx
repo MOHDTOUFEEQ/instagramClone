@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -19,28 +20,28 @@ const Footer = () => {
         <div className="col-span-1 w-full md:w-auto">
           <h2 className="text-2xl font-bold mb-4">Connect with Me</h2>
           <div className="flex space-x-4">
-          <a
-  href="https://www.linkedin.com/in/mohammed-toufeeq-956042266/"
+          <Link
+  to="https://www.linkedin.com/in/mohammed-toufeeq-956042266/"
   target="_blank"
   rel="noopener noreferrer"
   className="text-blue-500 hover:text-blue-700 transition-colors"
   title="LinkedIn"
 >
   LinkedIn
-</a>
-<a
-  href="https://github.com/MOHDTOUFEEQ"
+</Link>
+<Link
+  to="https://github.com/MOHDTOUFEEQ"
   target="_blank"
   rel="noopener noreferrer"
   className="text-blue-400 hover:text-blue-600 transition-colors"
   title="Github"
 >
   Github
-</a>
+</Link>
 
-            <a href="#" className="text-red-500 hover:text-red-700" title="YouTube">
+            <Link href="#" className="text-red-500 hover:text-red-700" title="YouTube">
               <i className="fab fa-youtube"></i>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
