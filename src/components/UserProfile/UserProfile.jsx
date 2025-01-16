@@ -15,7 +15,7 @@ function UserProfile() {
   const userData = useSelector((state) => state.auth.userData);
   const [followersList, setFollowersList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
-  const [followersnum, setFollowersnum] = useState('');
+  const [followersnum, setFollowersnum] = useState(0);
   const [followingButton, setFollowingButton] = useState(false);
   const [profileInfo, setProfileInfo] = useState({});
   const [showMessage, setShowMessage] = useState(false);
@@ -30,7 +30,13 @@ function UserProfile() {
   const [showFollowingMessage, setShowFollowingMessage] = useState(false);
   const [showRemoveFollowingMessage, setShowRemoveFollowingMessage] = useState(false);
   const [userFollowingNum, setUserFollowingNum] = useState(null);
-
+  const closeFollowers = ()=>{
+  
+    setShowFollowers((val)=> !val)
+    
+    document.querySelector("body").style.backgroundColor = "";
+    document.querySelector(".hiddeeeen").style.filter = "blur(0px)";
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,7 +49,6 @@ function UserProfile() {
         if (userProfile) {
           setFollowing(userProfile.followersList);
           setUserFollowingNum(userProfile.Following);
-          console.log("following",userProfile);
         }
 
         if (profileResponse) {
@@ -51,15 +56,11 @@ function UserProfile() {
           setFollowersnum(profileResponse.Followers);
 
           if (profileResponse.followersList) {
-            console.log(profileResponse.followersList);
             setFollowersList((prevFollowersList) => {
-              const isFollowing = prevFollowersList.includes(userData?.$id);
-              if (isFollowing) {
-                console.log("it is going up bro");
+               prevFollowersList.includes(userData?.$id);
+      
                 setFollowingButton(true);
-              } else {
-                console.log("it is going down bro");
-              }
+            
               return profileResponse.followersList; // Return the unchanged value
             });
           }
@@ -83,7 +84,6 @@ function UserProfile() {
       if (isFollowing) {
         const updatedFollowersList = followersList.filter((follower) => follower !== userData?.$id);
         setFollowersList(updatedFollowersList);
-        console.log("bro this is the point i am checking for", updatedFollowersList);
         setFollowing((data) => data.filter((item) => item !== userData?.$id));
         await service2.updateFollowers(id, {
           Followers: followersnum - 1,
@@ -102,7 +102,6 @@ function UserProfile() {
         }, 3000);
       } else {
         // Follow
-        console.log("down");
         const updatedFollowersList = [...followersList, userData?.$id];
         setFollowersList(updatedFollowersList);
         const updatedFollowingList = [...following, id];
@@ -129,10 +128,8 @@ function UserProfile() {
   const viewfollowers = async () => {
     try {
       document.querySelector(".hiddeeeen").style.filter = "blur(3px)";
-      console.log("hii");
       setShowFollowers((val) => !val);
       const followers_list = profileInfo.followersList;
-      console.log(followers_list);
   
       // Create an array to store the user information for each follower
       const followersInfo = [];
@@ -155,8 +152,6 @@ function UserProfile() {
         });
       }
   setFollowingList
-      // Now, followersInfo contains an array of user information for each follower
-      console.log(followersInfo);
       setFollowersInfo(followersInfo);
     } catch (error) {
       console.error("Error fetching followers:", error);
@@ -166,10 +161,8 @@ function UserProfile() {
   const viewfollowing = async () => {
     try {
       document.querySelector(".hiddeeeen").style.filter = "blur(3px)";
-      console.log("hii");
       setShowFollowing((val) => !val);
       const followers_list = profileInfo.followingList;
-      console.log(followers_list);
   
       // Create an array to store the user information for each follower
       const followersInfo = [];
@@ -192,8 +185,6 @@ function UserProfile() {
         });
       }
   
-      // Now, followersInfo contains an array of user information for each follower
-      console.log(followersInfo);
       setFollowingInfo(followersInfo);
     } catch (error) {
       console.error("Error fetching followers:", error);
@@ -202,25 +193,12 @@ function UserProfile() {
   };
   const closeFollowing = ()=>{
   
-    setShowFollowing((val)=> !val)
+    setShowFollowing(false)
     
     document.querySelector("body").style.backgroundColor = "";
     document.querySelector(".hiddeeeen").style.filter = "blur(0px)";
   }
 
-  const closingfollowers  = (e) => {
-    console.log(e.target);
-  
-    // Check if the click event target has the class name "followers_box"
-    if (e.target.classList.contains('followers_box')) {
-      setShowFollowers((val)=> !val)
-      
-      document.querySelector("body").style.backgroundColor = "";
-      document.querySelector(".hiddeeeen").style.filter = "blur(0px)";
-    } else {
-      console.log("The click event occurred inside 'followers_box'");
-    }
-  };
   const closeMessage  = () => {
       setSendMessage((val)=> !val)
       document.querySelector(".hiddeeeen").style.filter = "blur(0px)";
@@ -247,8 +225,6 @@ function UserProfile() {
     };
 
     try {
-      // Implement your logic to send the message to the backend
-      console.log('Sending message:', newMessage);
       const a = await service.addMessage(newMessage);
       if (a) {
         setShowMessage(true)
@@ -338,24 +314,24 @@ function UserProfile() {
                 </li>
 
                 <li onClick={viewfollowers} style={{cursor: "pointer"}} >
-                  <span className="font-semibold" onClick={viewfollowers}>{profileInfo ? followersnum : 0} </span>
+                  <span className="font-semibold">{followersnum ? followersnum : 0} </span>
                   followers
                 </li>
                 <li onClick={viewfollowing} style={{cursor: "pointer"}} >
-                  <span className="font-semibold" onClick={viewfollowing} >{profileInfo ? profileInfo.Following : 0} </span>
+                  <span className="font-semibold"  >{profileInfo ? profileInfo.Following : 0} </span>
                   following
                 </li>
               </ul>
             {profileInfo.Bio ? profileInfo.Bio :
               <div className="hidden md:block">
-                <h1 className="font-semibold">No bio</h1>
+                <h1 className="font-semibold"></h1>
               </div>}
             </div>
 
             <div className="md:hidden text-sm my-2">
-              <h1 className="font-semibold">Mr Travlerrr...</h1>
+              {/* <h1 className="font-semibold">Mr Travlerrr...</h1>
               <span>Travel, Nature and Music</span>
-              <p>Lorem ipsum dolor sit amet consectetur</p>
+              <p>Lorem ipsum dolor sit amet consectetur</p> */}
             </div>
 
           </header>
@@ -370,11 +346,11 @@ function UserProfile() {
               </li>
 
               <li onClick={viewfollowers}>
-                <span className="font-semibold text-gray-800 block" onClick={viewfollowers}>{profileInfo ? profileInfo.Followers : 0}</span>
+                <span className="font-semibold text-gray-800 block">{profileInfo.Followers ? profileInfo.Followers : 0}</span>
                 followers
               </li>
               <li onClick={viewfollowing} >
-                <span className="font-semibold text-gray-800 block" onClick={viewfollowing} >{profileInfo ? profileInfo.Following : 0}</span>
+                <span className="font-semibold text-gray-800 block"  >{profileInfo.Following ? profileInfo.Following : 0}</span>
                 following
               </li>
             </ul>
@@ -401,20 +377,18 @@ function UserProfile() {
         </div>
       </main>
       {showFollowers ? (
-  <div className='followers_box'  onClick={closingfollowers} >
+  <div className='followers_box'   >
     <div className='followers_main_box'>
       <div className='followers_second_main'>
         <div className='followers_logo'>
           <h3>Followers</h3>
-          <span onClick={closingfollowers}>
-          <FontAwesomeIcon className='followers_close'  icon={faTimes} />
-          </span>
+          <FontAwesomeIcon onClick={closeFollowers} className='followers_close cursor-pointer' icon={faTimes} />
         </div>
         <div className='followers_input'>
       
           </div>
         <div className='followers_append_list'>
-        { followersList?
+        { followersList.length>0?
              followersInfo.map((follower) => (
               <div className='followers_user_top' key={follower.userId}>
                 <div className='followers_user_dp'>
@@ -434,7 +408,7 @@ function UserProfile() {
             ))
         : (
           <div className="no-followers-message">
-            <FontAwesomeIcon icon={faMeh} className="meh-icon" />
+            <FontAwesomeIcon icon={faMeh} className="meh-icon cursor-pointer" />
             No followers yet.
           </div>
         )
@@ -448,20 +422,18 @@ function UserProfile() {
     )
 : null }
       {showFollowing ? (
-  <div className='followers_box'  onClick={closeFollowing} >
+  <div className='followers_box'   >
     <div className='followers_main_box'>
       <div className='followers_second_main'>
         <div className='followers_logo'>
           <h3>Following</h3>
-          <span onClick={closeFollowing}>
-          <FontAwesomeIcon className='followers_close'  icon={faTimes} />
-          </span>
+          <FontAwesomeIcon onClick={closeFollowing} className='followers_close cursor-pointer' icon={faTimes} />
         </div>
         <div className='followers_input'>
       
           </div>
         <div className='followers_append_list'>
-        { followingList?
+        { followingList.length>0?
              followingInfo.map((follower) => (
               <div className='followers_user_top' key={follower.userId}>
                 <div className='followers_user_dp'>
@@ -481,7 +453,7 @@ function UserProfile() {
             ))
         : (
           <div className="no-followers-message">
-            <FontAwesomeIcon icon={faMeh} className="meh-icon" />
+            <FontAwesomeIcon  icon={faMeh} className="meh-icon cursor-pointer" />
             No followers yet.
           </div>
         )

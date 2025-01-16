@@ -18,7 +18,6 @@ function Onlymessages({ id, name, profile, profile1 }) {
         const sortedMessages = combinedMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
         setSortedMessages(sortedMessages);
-        console.log("Fetched and sorted messages", sortedMessages);
       }
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -43,7 +42,6 @@ function Onlymessages({ id, name, profile, profile1 }) {
     try {
       setSortedMessages((prevMessages) => [...prevMessages, newMessage]);
       await service.addMessage(newMessage);
-      console.log("Message sent successfully");
       setMessageInput('');
     } catch (error) {
       console.error("Error sending message:", error);
@@ -68,7 +66,7 @@ function Onlymessages({ id, name, profile, profile1 }) {
       {!id && (
         <div className="h-screen overflow-y-auto p-4 flex justify-center items-center" style={{ width: '70vw' }}>
           <div className="bg-white p-4 rounded-lg text-center">
-            <h2 className="text-xl font-semibold mb-2">Send private photos and messages</h2>
+            <h2 className="text-xl font-semibold mb-2">Send photos and messages</h2>
             <p className="text-gray-600 mb-4">Start a conversation with one or more friends using Your Messages.</p>
             <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Start a conversation now</button>
           </div>
