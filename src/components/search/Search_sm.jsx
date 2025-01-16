@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
+import  { useEffect, useState } from 'react';
+import { Link} from 'react-router-dom';
 import service2 from '../../appwrite/config2';
 import { useSelector } from 'react-redux';
 import service from '../../appwrite/config';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function SearchSm() {
   const userData = useSelector((state) => state.auth.userData);
-  const isSmallScreen = useMediaQuery({ maxWidth: 767 });
   const [searchValue, setSearchValue] = useState("");
   const [searchUser, setSearchUser] = useState([]);
-  const location = useLocation();
 
   // useEffect(() => {
   //   if (isSmallScreen && location.pathname === "/search") {
@@ -51,7 +46,6 @@ function SearchSm() {
             type="search"
             className="w-full px-4 py-2 text-gray-800 rounded-full focus:outline-none bg-[#efefef]"
             placeholder="Search"
-            x-model="search"
             onChange={(e) => setSearchValue(e.target.value)}
           />
           

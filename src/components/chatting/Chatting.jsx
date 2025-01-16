@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import service from '../../appwrite/config';
 import service2 from '../../appwrite/config2';
 import Onlymessages from './Onlymessages';
 import { useLocation } from 'react-router-dom';
-
-import { current } from '@reduxjs/toolkit';
 
 function Chatting() {
   const location = useLocation();
@@ -17,9 +15,7 @@ function Chatting() {
     }
   }
   const userData = useSelector((state) => state.auth.userData);
-    const [followersList, setFollowersList] = useState([]);
     const [curr_user_id, setCurr_user_id] = useState("");
-    const [showFollowers, setShowFollowers] = useState(false);
     const [followersInfo, setFollowersInfo] = useState([]);
     const [current_id, setCurrent_id] = useState("");
     const [profilePic, setProfilePic] = useState("");
@@ -29,22 +25,16 @@ function Chatting() {
       async function fetchingFollowers() {
         try {
           const userProfile = await service.getProfileinfo(String(userData?.$id));
-          console.log(userProfile);
+        
           if (userProfile) {
-            console.log("I am coming");
-            setFollowersList(userProfile.followersList);
-            console.log("i am profile",userProfile);
             setCurr_user_id(userProfile.ProfilePic);
             (userProfile.followersList);
-            console.log("I am followers List", followersList);
           }
   
-          setShowFollowers((val) => !val);
   
           // Rest of your code...
   
-          const followers_list = userProfile.followersList; // Fixed: Use userProfile instead of profileInfo
-          console.log(followers_list);
+          const followers_list = userProfile.followersList;
   
           // Create an array to store the user information for each follower
           const followersInfo = [];
@@ -67,8 +57,6 @@ function Chatting() {
             });
           }
   
-          // Now, followersInfo contains an array of user information for each follower
-          console.log(followersInfo);
           setFollowersInfo(followersInfo);
         } catch (error) {
           console.error("Error fetching followers:", error);
@@ -82,8 +70,6 @@ function Chatting() {
         setCurrent_id(e.userId)
         setCurrent_name(e.username)
         setProfilePic(e.profilePic)
-        console.log("i am log e", e);
-        console.log("i am username", current_name);
     } 
     const homechat = ()=>{
         setCurrent_id("")

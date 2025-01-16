@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from 'react-responsive';
 import Logout from "./Logout";
@@ -12,7 +12,6 @@ export const Header = () => {
   const authStatus = useSelector((state) => state.auth.status);
   const userData = useSelector((state) => state.auth.userData);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
-  const [uploadcomponent, setUploadComponent] = useState(false);
   const [SearchUser, setSearchUser] = useState([]);
   const isSmallScreen = useMediaQuery({ maxWidth: 767 });
   const isBigScreen = useMediaQuery({ minWidth: 767 });
@@ -57,15 +56,8 @@ export const Header = () => {
     const search_navbar = document.querySelector(".search_extend");
     const search_bottom = document.querySelector(".search_bottom");
     const header = document.querySelector(".header");
-    const homeBUtton  = document.querySelector(".Home").style.color = "#5abcb2"
 
-    if (homeBUtton) {
-      const homeBUtton1  = document.querySelector(".search").style.color = "#5abcb2"
-      const homeBUtton2  = document.querySelector(".create").style.color = "#5abcb2"
-      const homeBUtton3  = document.querySelector(".profile").style.color = "#5abcb2"
-      const homeBUtton4  = document.querySelector(".singup").style.color = "#5abcb2"
-      const homeBUtton5  = document.querySelector(".login").style.color = "#5abcb2"
-    }
+    
     if (window.innerWidth > 767) {
       if (search_navbar.style.width === "25vw") {
         console.log("up");
@@ -82,7 +74,6 @@ export const Header = () => {
   };
   const search_button_off = ()=>{
     const search_navbar = document.querySelector(".search_extend");
-    const search_bottom = document.querySelector(".search_bottom");
     const header = document.querySelector(".header");
     search_navbar.style.width = "0vw";
     header.style.width = "15vw";
@@ -117,9 +108,7 @@ export const Header = () => {
     fetchData();
   }, [searchValue]);
 
-  const create_post = ()=>{
-    setUploadComponent((val)=>!val)
-  }
+ 
   const hideSidebar = ()=>{
     search_button_off()
   }
@@ -151,10 +140,10 @@ export const Header = () => {
           (
             <Link to={"/search"}>
               <li className="nav__item">
-                <a className="nav__link search">
+                <span className="nav__link search">
                   <i className='bx bx-user nav__icon'></i>
                   <span className="nav__name">Search</span>
-                </a>
+                </span>
               </li>
             </Link>
           ) : null
@@ -224,10 +213,10 @@ export const Header = () => {
           (
             <Link to={"/search"}>
               <li className="nav__item">
-                <a className="nav__link search">
+                <span className="nav__link search">
                   <i className='bx bx-user nav__icon'></i>
                   <span className="nav__name">Search</span>
-                </a>
+                </span>
               </li>
             </Link>
           ) : null

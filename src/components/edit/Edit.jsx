@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import service from '../../appwrite/config';
@@ -43,7 +43,7 @@ function Edit() {
                     const img = data.image[0];
                     // Assuming service.uploadFile returns a promise
                     const img_data = await service.uploadFile(img);
-                    const deletingold_image = await service.deleteFile(post.featuredImage);
+                    await service.deleteFile(post.featuredImage);
                     if (img_data && img_data.$id) {
                         data.featuredImage = img_data.$id;
         

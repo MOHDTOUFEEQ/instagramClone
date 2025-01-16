@@ -1,10 +1,5 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../store/authSlice'
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faShoppingBag, faBars,faBookOpen, faSignOutAlt, faUserPlus, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
-
 import { useNavigate } from 'react-router-dom'
 import authService from '../../appwrite/auth'
 function Logout() {
@@ -21,14 +16,14 @@ function Logout() {
     }
     return (
         <button onClick={doingLogout}> 
-        <Link className='logout_a'>
-              <li class="nav__item">
-                  <a href="" class="nav__link">
-                      <i class='bx bx-message-square-detail nav__icon'></i>
-                      <span class="nav__name">Logout</span>
+        <span className='logout_a'>
+              <li className="nav__item">
+                  <a href="" className="nav__link">
+                      <i className='bx bx-message-square-detail nav__icon'></i>
+                      <span className="nav__name">Logout</span>
                   </a>
               </li>
-          </Link>
+          </span>
            </button>
   )
 }

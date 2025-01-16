@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
 import service from '../../appwrite/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -70,5 +70,7 @@ function UserBlogs({id}) {
         </>
     );
 }
-
+UserBlogs.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 export default UserBlogs;

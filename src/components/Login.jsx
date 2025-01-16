@@ -1,141 +1,136 @@
-import React, {useEffect, useState} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
-import { login as authLogin } from '../store/authSlice'
-import {useDispatch, useSelector} from "react-redux"
-import authService from "../appwrite/auth"
-import {useForm} from "react-hook-form"
+import  { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { login as authLogin } from '../store/authSlice';
+import { useDispatch } from 'react-redux';
+import authService from '../appwrite/auth';
+import { useForm } from 'react-hook-form';
+
 const Loading = () => (
   <div className="flex justify-center items-center">
-    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
     <span className="ml-2 text-gray-900">Logging In...</span>
   </div>
 );
-function Login() {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const [loading, setLoading] = useState(false);
-    const {register, handleSubmit} = useForm()
-    const [error, setError] = useState("")
-   
-    const login = async(data) => {
-        setError("")
-        try {
-          setLoading(true);
-            const session = await authService.login(data)
-            if (session) {
-                const userData = await authService.getCurrentUser()
-                if (userData) dispatch(authLogin({ userData }));
-                setLoading(false);
-                navigate("/")
 
-            }
-        } catch (error) {
-            setError(error.message)
-            setLoading(false);
-        }
+function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = async (data) => {
+    setError('');
+    try {
+      setLoading(true);
+      const session = await authService.login(data); // Send email & password for login
+      if (session) {
+        const userData = await authService.getCurrentUser(); // Fetch user data
+        if (userData) dispatch(authLogin({ userData })); // Store user data in Redux
+        setLoading(false);
+        navigate('/'); // Navigate to the homepage after successful login
+      }
+    } catch (err) {
+      setError(err.message || 'An error occurred. Please try again.');
+      setLoading(false);
     }
+  };
 
   return (
-
-    <section class="main-container h-screen rounded-md">
-
-      <div class="flex items-center justify-center bg-white px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
-        <div class="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-          <div class="mb-2">
-            <svg
-              width="50"
-              height="56"
-              viewBox="0 0 50 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M23.2732 0.2528C20.8078 1.18964 2.12023 12.2346 1.08477 13.3686C0 14.552 0 14.7493 0 27.7665C0 39.6496 0.0986153 41.1289 0.83823 42.0164C2.12023 43.5449 23.2239 55.4774 24.6538 55.5267C25.9358 55.576 46.1027 44.3832 48.2229 42.4602C49.3077 41.474 49.3077 41.3261 49.3077 27.8158C49.3077 14.3055 49.3077 14.1576 48.2229 13.1714C46.6451 11.7415 27.1192 0.450027 25.64 0.104874C24.9497 -0.0923538 23.9142 0.00625992 23.2732 0.2528ZM20.2161 21.8989C20.2161 22.4906 18.9835 23.8219 17.0111 25.3997C15.2361 26.7803 13.8061 27.9637 13.8061 28.0623C13.8061 28.1116 15.2361 29.0978 16.9618 30.2319C18.6876 31.3659 20.2655 32.6479 20.4134 33.0917C20.8078 34.0286 19.871 35.2119 18.8355 35.2119C17.8001 35.2119 9.0233 29.3936 8.67815 28.5061C8.333 27.6186 9.36846 26.5338 14.3485 22.885C17.6521 20.4196 18.4904 20.0252 19.2793 20.4196C19.7724 20.7155 20.2161 21.3565 20.2161 21.8989ZM25.6893 27.6679C23.4211 34.9161 23.0267 35.7543 22.1391 34.8668C21.7447 34.4723 22.1391 32.6479 23.6677 27.9637C26.2317 20.321 26.5275 19.6307 27.2671 20.3703C27.6123 20.7155 27.1685 22.7864 25.6893 27.6679ZM36.0932 23.2302C40.6788 26.2379 41.3198 27.0269 40.3337 28.1609C39.1503 29.5909 31.6555 35.2119 30.9159 35.2119C29.9298 35.2119 28.9436 33.8806 29.2394 33.0424C29.3874 32.6479 30.9652 31.218 32.7403 29.8867L35.9946 27.4706L32.5431 25.1532C30.6201 23.9205 29.0915 22.7371 29.0915 22.5892C29.0915 21.7509 30.2256 20.4196 30.9159 20.4196C31.3597 20.4196 33.6771 21.7016 36.0932 23.2302Z"
-                fill="black"
-              ></path>
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold leading-tight text-black">
-            Sign in to your account
-          </h2>
-          <p class="mt-2text-sm text-gray-600 ">
-            Don&#x27;t have an account?{" "}
-            <Link
-              to={"/Sign-up"}
-              class="font-semibold text-black transition-all duration-200 hover:underline"
-            >
-              Create a free account
-            </Link>
-          </p>
-          <form onSubmit={handleSubmit(login)} class="mt-8">
-            <div class="space-y-5">
-              <div>
-                <label for="" class="text-base font-medium text-gray-900">
-                  {" "}
-                  Email address{" "}
-                </label>
-                <div class="mt-2">
-                  <input
-                    class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="email"
-                    placeholder="Email"
-                    {...register("email",{
-                      required: true,
-                    })} 
-                />
-                </div>
-              </div>
-              <div>
-                <div class="flex items-center justify-between">
-                  <label for="" class="text-base font-medium text-gray-900">
-                    {" "}
-                    Password{" "}
-                  </label>
-                </div>
-                <div class="mt-2">
-                  <input
-                    class="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="password"
-                    placeholder="Password"
-                    {...register("password",{
-                      required: true,
-                    })}
-                  />
-                </div>
-              </div>
-              <div>
-              {loading ? <Loading /> : 
-                <button
-                  type="submit"
-                  class="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                >
-                  Get started{" "}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="ml-2"
-                  >
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </button>}
-              </div>
-            </div>
-          </form>
-          <div class="mt-3 space-y-3">
-            {error ? <p>{error}</p> : null}
-          </div>
+    <section className="main-container h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <div className="text-center mb-6">
+          <svg
+            width="50"
+            height="56"
+            viewBox="0 0 50 56"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M23.2732 0.2528C20.8078 1.18964 2.12023 12.2346 1.08477 13.3686C0 14.552 0 14.7493 0 27.7665C0 39.6496 0.0986153 41.1289 0.83823 42.0164C2.12023 43.5449 23.2239 55.4774 24.6538 55.5267C25.9358 55.576 46.1027 44.3832 48.2229 42.4602C49.3077 41.474 49.3077 41.3261 49.3077 27.8158C49.3077 14.3055 49.3077 14.1576 48.2229 13.1714C46.6451 11.7415 27.1192 0.450027 25.64 0.104874C24.9497 -0.0923538 23.9142 0.00625992 23.2732 0.2528Z"
+              fill="black"
+            ></path>
+          </svg>
         </div>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
+          Sign in to your account
+        </h2>
+        <p className="text-center text-sm text-gray-600 mb-6">
+          Don’t have an account?{' '}
+          <Link to="/Sign-up" className="font-medium text-blue-600 hover:underline">
+            Create a free account
+          </Link>
+        </p>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          {/* Email Input */}
+          <div>
+            <label className="text-sm font-medium text-gray-700">Email Address</label>
+            <input
+              type="email"
+              className={`block w-full mt-1 p-2 border rounded ${
+                errors.email ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="Enter your email"
+              {...register('email', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Invalid email address',
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+            )}
+          </div>
+
+          {/* Password Input */}
+          <div>
+            <label className="text-sm font-medium text-gray-700">Password</label>
+            <input
+              type="password"
+              className={`block w-full mt-1 p-2 border rounded ${
+                errors.password ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="Enter your password"
+              {...register('password', {
+                required: 'Password is required',
+                minLength: {
+                  value: 6,
+                  message: 'Password must be at least 6 characters long',
+                },
+              })}
+            />
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <div>
+            {loading ? (
+              <Loading />
+            ) : (
+              <button
+                type="submit"
+                className="w-full py-2 bg-black text-white font-semibold rounded hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+              >
+                Login
+              </button>
+            )}
+          </div>
+        </form>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mt-4 text-red-500 text-center text-sm">
+            {error}
+          </div>
+        )}
       </div>
     </section>
-  )
+  );
 }
 
-export default Login
+export default Login;

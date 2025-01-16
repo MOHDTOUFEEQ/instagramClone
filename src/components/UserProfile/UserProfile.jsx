@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import service from '../../appwrite/config';
 import UserBlogs from './UserBlogs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera, faL } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faMeh } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from '@react-hook/media-query';
 import service2 from '../../appwrite/config2';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function UserProfile() {
   const { id } = useParams();
@@ -28,7 +27,6 @@ function UserProfile() {
   const [sendMessage, setSendMessage ] = useState(false);
   const [posts, setPosts] = useState([]);
   const [following, setFollowing] = useState([]);
-  const dispatch = useDispatch()
   const [showFollowingMessage, setShowFollowingMessage] = useState(false);
   const [showRemoveFollowingMessage, setShowRemoveFollowingMessage] = useState(false);
   const [userFollowingNum, setUserFollowingNum] = useState(null);
@@ -223,7 +221,7 @@ function UserProfile() {
       console.log("The click event occurred inside 'followers_box'");
     }
   };
-  const closeMessage  = (e) => {
+  const closeMessage  = () => {
       setSendMessage((val)=> !val)
       document.querySelector(".hiddeeeen").style.filter = "blur(0px)";
   };
@@ -387,7 +385,6 @@ function UserProfile() {
               <li className={`md:border-t cursor-pointer md:border-gray-700 md:-mt-px md:text-gray-700`}>
                 <a
                   className="inline-block p-3"
-                  onClick={(e) => { setShowTagged(true) }}
                 >
                   <i className="fas fa-th-large text-xl md:text-xs"></i>
                   <span className="hidden md:inline">post</span>

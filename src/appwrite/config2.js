@@ -1,5 +1,5 @@
 import conf from "../conf/conf";
-import { Client, Storage , ID , Databases, Query } from "appwrite";
+import { Client, Storage  , Databases, Query } from "appwrite";
  class Service2 {
     client = new Client();
     databases;
@@ -122,28 +122,27 @@ import { Client, Storage , ID , Databases, Query } from "appwrite";
           console.log("error in getuser", error);
         }
       }
-      async getFollowersList(id) {
-        try {
-          const query = [this.appwrite.query().equal('userID', id)];
-          const options = {
-            limit: 10,  // Adjust the limit as needed
-            offset: 0,  // Adjust the offset as needed
-          };
+      // async getFollowersList(id) {
+      //   try {
+      //     const query = [this.appwrite.query().equal('userID', id)];
+      //     const options = {
+      //       limit: 10,  
+      //       offset: 0,
+      //     };
       
-          const result = await this.databases.listDocuments(
-            conf.appwriteDatabaseId,
-            conf.appwriteProfileCollectionId,  // Assuming this is your followers collection ID
-            query,
-            options
-          );
+      //     const result = await this.databases.listDocuments(
+      //       conf.appwriteDatabaseId,
+      //       conf.appwriteProfileCollectionId, 
+      //       query,
+      //       options
+      //     );
       
-          // Assuming result.documents contains an array of followers
-          return result.documents;
-        } catch (error) {
-          console.log("Error in getFollowersList", error);
-          throw error;  // Rethrow the error so the calling code can handle it
-        }
-      }
+      //     return result.documents;
+      //   } catch (error) {
+      //     console.log("Error in getFollowersList", error);
+      //     throw error;
+      //   }
+      // }
       async getPostsForCurrentUserr(currentUserId) {
         try {
           const query = [

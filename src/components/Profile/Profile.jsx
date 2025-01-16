@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Allblogs from '../Allblogs';
-import { useForm } from 'react-hook-form';
 import service from '../../appwrite/config';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link,  } from 'react-router-dom';
 import Tagged_post from '../tagged/Tagged_post';
 import service2 from '../../appwrite/config2';
-import { faBookmark, faL } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark,  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +17,6 @@ function Profile() {
   const [editProfile,setEditProfile] = useState(false)
   const [profileInfo, setProfileInfo] = useState({});
   const [posts, setPosts] = useState([]);
-  const [savedPosts, setSavedPosts] = useState([]);
   const [showTagged, setShowTagged] = useState(true);
   const [showFollowers, setShowFollowers ] = useState(false);
   const [followersInfo, setFollowersInfo] = useState([]);
@@ -36,11 +34,9 @@ function Profile() {
   const handleShowDelete = (e)=>{
     setShowDelete((val)=>!val);
     setCurrID(e)
-    console.log("parent is getting call");
   }
   const message1 = useSelector((state) => state.auth.message);
   useEffect(() => {
-    console.log("I am the changed value in state", message1);
     setShowMessage(true);
 
     const timeoutId = setTimeout(() => {
@@ -52,14 +48,12 @@ function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("i am userdata in profile", userData);
         const [profileResponse, postsResponse, ] = await Promise.all([
           service.getProfileinfo(userData.$id),
           service.getPostsForCurrentUser(userData.$id)
         ]);
 
         if (profileResponse) {
-          console.log("here is the profile respone", profileResponse);
           setProfileInfo(profileResponse);
         }
 
@@ -67,9 +61,6 @@ function Profile() {
           setPosts(postsResponse.documents);
         }
 
-        // if (savedPostsResponse) {
-        //   setSavedPosts(savedPostsResponse.articles);
-        // }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -78,16 +69,7 @@ function Profile() {
     fetchData();
   }, []);
 
-  const onSubmit = async (data) => {
-    try {
-      if (data) {
-        console.log("printed");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setError("Please don't use any commas, colons, or special characters in the title. Updates coming soon!");
-    }
-  };
+
 
   const closing_edit = ()=>{
     setEditProfile(false)
@@ -95,30 +77,24 @@ function Profile() {
     document.querySelector(".hiddeeeen").style.filter = "blur(0px)";
   }
   const Iamclicking = () => {
-    console.log("hey");
     setEditProfile((data) => !data);
     if (!editProfile) {
       document.querySelector(".hiddeeeen").style.filter = "blur(3px)";
     } else {
       document.querySelector(".hiddeeeen").style.filter = "blur(0px)";
-      console.log("Editing profile is now disabled");
     }
   };
   const handleFileUpload =  (data)=>{
     async function uploadingprodile () {
       if (profileInfo.ProfilePic) {
         await service.deleteFile(profileInfo.ProfilePic)
-        console.log("deleted");
       }
-      console.log("submited");
       const file  = data.target.files[0];
       const success_uploaded = await service.uploadFile(file)
       if (success_uploaded) {
         const profile_pic_id = success_uploaded.$id
         const updating_profile  = await service2.updateProfilePic(userData.$id, {ProfilePic: profile_pic_id})
-        console.log("updating profile",updating_profile);
-        console.log("this is the success copy");
-        console.log("uploaded successfully");
+    
         if (updating_profile) {
           window.location.reload();
         }
@@ -129,15 +105,10 @@ function Profile() {
   }
   const viewfollowers = async () => {
     try {
-      console.log("hii");
       document.querySelector(".hiddeeeen").style.filter = "blur(3px)";
       setShowFollowers((val) => !val);
-      if (!showFollowers) {
-      } else {
-        console.log("Editing profile is now disabled");
-      }
+     
       const followers_list = profileInfo.followersList;
-      console.log(followers_list);
   
       // Create an array to store the user information for each follower
       const followersInfo = [];
@@ -160,12 +131,10 @@ function Profile() {
         });
       }
   
-      // Now, followersInfo contains an array of user information for each follower
-      console.log(followersInfo);
+
       setFollowersInfo(followersInfo);
     } catch (error) {
       console.error("Error in viewfollowers", error);
-      // Handle the error appropriately, e.g., show a message to the user
     }
   };
  
@@ -179,7 +148,6 @@ function Profile() {
   }
   const viewfollowing = async () => {
     try {
-      console.log("hii");
       document.querySelector(".hiddeeeen").style.filter = "blur(3px)";
       setShowFollowing((val) => !val);
   
@@ -189,9 +157,7 @@ function Profile() {
       }
   
       const followers_list = profileInfo.followingList;
-      console.log(followers_list);
   
-      // Create an array to store the user information for each follower
       const followersInfo = [];
   
       // Iterate over each follower
@@ -212,18 +178,14 @@ function Profile() {
         });
       }
       setFollowingInfo(followersInfo)
-      // Now, followersInfo contains an array of user information for each follower
-      console.log("i am empty", followersInfo);
+
       
     } catch (error) {
       console.error("Error in viewfollowing", error);
-      // Handle the error appropriately, e.g., show a message to the user
     }
   };
   
- useEffect(()=>{
-  console.log(" i am followingInfo", followingInfo);
- },[followingInfo])
+
   
   const closeFollowing = ()=>{
   
@@ -234,7 +196,6 @@ function Profile() {
   }
   
   const closingfollowing = (e) => {
-    console.log(e.target);
   
     // Check if the click event target has the class name "followers_box"
     if (e.target.classList.contains('followers_box')) {
@@ -247,9 +208,7 @@ function Profile() {
     }
   };
   const closingfollowers  = (e) => {
-    console.log(e.target);
   
-    // Check if the click event target has the class name "followers_box"
     if (e.target.classList.contains('followers_box')) {
       setShowFollowers((val)=> !val)
       
@@ -261,14 +220,10 @@ function Profile() {
   };
   
   useEffect(()=>{
-    console.log(filterFollowing);
-    console.log(followingInfo);
     if (filterFollowing.length !== 0) {
 
       const filteredFollowers = followersInfo.filter((e) => e.username && e.username.startsWith(filterFollowing));
       setFilteredFollowing(filteredFollowers)
-      console.log("filteredFollowers", filteredFollowing);
-      console.log("totalfollowing", followersInfo);
     }
     if (filterFollowing.length == 0) {
       setFilteredFollowing([])
@@ -277,8 +232,6 @@ function Profile() {
 
       const filteredFollowers = followingInfo.filter((e) => e.username && e.username.startsWith(filterFollowing_mis));
       setFilteredFollowingg_mis(filteredFollowers)
-      console.log("filteredFollowers", filteredFollowing);
-      console.log("totalfollowing", followersInfo);
     }
     if (filterFollowing_mis.length == 0) {
       setFilteredFollowingg_mis([])
@@ -287,59 +240,46 @@ function Profile() {
 
 
   const removeFollower = async (userId) => {
-    console.log(userId);
     
-    // Filter out the follower with the given userId
 
     const updatedFollowersInfo = followersInfo.filter(follower => follower.userId !== userId);
     
-    console.log("I am updated followers info", updatedFollowersInfo);
     
     // Update the followers count
     profileInfo.Followers = profileInfo.Followers - 1;
     
     // Extract only userIds from the updatedFollowersInfo array
     const userIdsOnly = updatedFollowersInfo.map(follower => follower.userId);
-    console.log("onkly userIDssss ", userIdsOnly);
     // Call the service2.updateFollowers with only the necessary data
-    const update_followers = await service2.updateFollowers(userData.$id, {
+    await service2.updateFollowers(userData.$id, {
       Followers: profileInfo.Followers,
       followersList: userIdsOnly,
     });
   
-    if (update_followers) {
-      console.log(update_followers);
-      console.log("remove follower done");
-    }
+  
   
     // Update the state with the modified array
     setFollowersInfo(updatedFollowersInfo);
   };
   const removeFollowing = async (userId) => {
-    console.log(userId);
     
     // Filter out the follower with the given userId
 
     const updatedFollowingListInfo = followingInfo.filter(follower => follower.userId !== userId);
     
-    console.log("I am updated followers info", updatedFollowingListInfo);
     
     // Update the followers count
     profileInfo.Following = profileInfo.Following - 1;
     
     // Extract only userIds from the updatedFollowersInfo array
     const userIdsOnly = updatedFollowingListInfo.map(follower => follower.userId);
-    console.log("onkly userIDssss ", userIdsOnly);
     // Call the service2.updateFollowers with only the necessary data
-    const update_followers = await service2.updateFollowing(userData.$id, {
+     await service2.updateFollowing(userData.$id, {
       Following: profileInfo.Following,
       followingList: userIdsOnly,
     });
   
-    if (update_followers) {
-      console.log(update_followers);
-      console.log("remove following done");
-    }
+  
   
     // Update the state with the modified array
     setFollowingInfo(updatedFollowingListInfo);
@@ -425,11 +365,11 @@ function Profile() {
                 </li>
 
                 <li className='cursor-pointer' onClick={viewfollowers}>
-                  <span className="font-semibold">{profileInfo ? profileInfo.Followers : 0} </span>
+                  <span className="font-semibold">{profileInfo.Followers ?  profileInfo.Followers : 0} </span>
                   followers
                 </li>
                 <li  onClick={viewfollowing} className='cursor-pointer'>
-                  <span className="font-semibold">{profileInfo ? profileInfo.Following : 0} </span>
+                  <span className="font-semibold">{profileInfo.Following ? profileInfo.Following : 0} </span>
                   following
                 </li>
               </ul>
@@ -464,11 +404,11 @@ function Profile() {
               </li>
 
               <li>
-                <span className="font-semibold text-gray-800 block"  onClick={viewfollowers}>{profileInfo ? profileInfo.Followers : 0}</span>
+                <span className="font-semibold text-gray-800 block"  onClick={viewfollowers}>{profileInfo.Followers ? profileInfo.Followers : 0}</span>
                 followers
               </li>
               <li>
-                <span className="font-semibold text-gray-800 block"  onClick={viewfollowing}>{profileInfo ? profileInfo.Following : 0}</span>
+                <span className="font-semibold text-gray-800 block"  onClick={viewfollowing}>{profileInfo.Following ? profileInfo.Following : 0}</span>
                 following
               </li>
             </ul>
@@ -483,7 +423,7 @@ function Profile() {
               <li className={` ${showTagged ? "md:border-t" : ""} cursor-pointer md:border-gray-700 md:-mt-px md:text-gray-700`}>
                 <a
                   className="inline-block p-3"
-                  onClick={(e) => { setShowTagged(true) }}
+                  onClick={() => { setShowTagged(true) }}
                 >
                 
                 <i className=" fas fa-th-large text-xl md:hidden  xl:hidden lg:hidden"><FontAwesomeIcon icon={faCamera} className="text-xl" /></i>
@@ -494,7 +434,7 @@ function Profile() {
               <li className={` ${!showTagged ? "md:border-t" : ""} cursor-pointer md:border-gray-700 md:-mt-px md:text-gray-700`}>
               <a
                   className="inline-block p-3"
-                  onClick={(e) => { setShowTagged(false) }}
+                  onClick={() => { setShowTagged(false) }}
                 >
                  <i className=" fas fa-th-large text-xl md:hidden xl:hidden lg:hidden">
                   <FontAwesomeIcon icon={faBookmark} className="text-xl" />

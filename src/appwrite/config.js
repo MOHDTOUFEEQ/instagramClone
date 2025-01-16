@@ -64,7 +64,6 @@ import { Client, Storage , ID , Databases, Query } from "appwrite";
             } 
           );
       
-          console.log("Comment added successfully");
         } catch (error) {
           console.error("Error adding comment:", error);
           throw error; // Rethrow the error to handle it in the calling code
@@ -113,7 +112,7 @@ import { Client, Storage , ID , Databases, Query } from "appwrite";
           console.error("Error fetching messages:", error);
           throw error;
         }
-      };
+      }
 
       async getComments(slug){
         try {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import service from '../../appwrite/config';
 import service2 from '../../appwrite/config2';
@@ -8,7 +8,7 @@ import authService from '../../appwrite/auth';
 import { successfully } from '../../store/authSlice';
 
 function EditProfile() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit} = useForm();
     const userData = useSelector((state) => state.auth.userData);
     const [data, setData] = useState(null);
     const [name, setName] = useState("");
@@ -25,11 +25,10 @@ function EditProfile() {
           async function editprof() {
             service2.getcurrUser(userData.$id)
             .then((response) => {
-                console.log(response.documents[0]);
                 set_curr_user(response.documents[0]);
                 setName(response.documents[0].userName);
                 setBio(response.documents[0].Bio);
-            }).then(()=> console.log(bio))
+            })
             .catch((error) => {
                 console.error("Error fetching current user:", error);
             });
@@ -99,7 +98,6 @@ function EditProfile() {
           setLoading(false);
           dispatch(successfully({ messageStatus: true, message: "Profile updated successfully!" }));
           navigate("/profile")
-          console.log("Edit completed successfully");
       } catch (error) {
           console.error("Error handling form submission:", error);
           setLoading(false);
@@ -140,7 +138,7 @@ function EditProfile() {
                     className="w-full bg-transparent p-0 text-sm text-gray-500 focus:outline-none"
                     value={name ? name : ''}
                     id="name"
-                    onChange={(e)=> console.log(setName(e.target.value))}
+                    onChange={(e)=> setName(e.target.value)}
                     type="text"
                     placeholder="Your name"
                   />
@@ -155,7 +153,7 @@ function EditProfile() {
                     id="bio"
                     value={bio ? bio : null}
                     type="text"
-                    onChange={(e)=> console.log(setBio(e.target.value))}
+                    onChange={(e)=> setBio(e.target.value)}
                     placeholder="Write Your Bio"
                   />
                 </label>

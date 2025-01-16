@@ -656,7 +656,7 @@ img {
   width: 22px;
   color: #000;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   position: absolute;
   right: 7px;
   top: 0;
