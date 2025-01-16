@@ -197,8 +197,8 @@ export const Header = () => {
 )}
 {isSmallScreen && (
       <header className="header header1 sm:width-screen" id="header">
-  <nav className="nav container">
-    <a className="nav__logo">Blog</a>
+  <nav className="nav container justify-center" style={{justifyContent:'center'}}>
+    <a className="nav__logo text-bold">Messenger</a>
 
     <div className="nav__menu" id="nav-menu">
       <ul className="nav__list">
@@ -263,7 +263,6 @@ export const Header = () => {
 
     </div>
 
-    <img src={perfilImage} alt="" className="nav__img" />
   </nav>
 </header>
 )}
