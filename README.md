@@ -14,7 +14,7 @@ A feature-rich social media platform built with **React.js**, **Tailwind CSS**, 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/MOHDTOUFEEQ/instagram-clone.git
+   git clone https://github.com/MOHDTOUFEEQ/instagramClone.git
 2. Install dependencies:
    ```bash
     cd myblogs
