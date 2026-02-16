@@ -117,7 +117,7 @@ export const Header = () => {
     {isBigScreen && (
       <header className="header header1 sm:width-screen" id="header">
   <nav className="nav container">
-    <Link className="nav__logo">Blog</Link>
+    <Link className="nav__logo">InstaClone</Link>
 
     <div className="nav__menu" id="nav-menu">
       <ul className="nav__list">
