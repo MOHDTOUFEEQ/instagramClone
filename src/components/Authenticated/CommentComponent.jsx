@@ -29,7 +29,6 @@ function CommentComponent({ postDetails, sendingnouser }) {
         // Clear the input field
         setCommentText('');
       } catch (error) {
-        console.error('Error submitting comment:', error);
       }
     } else {
       sendingnouser(); // Notify the parent if the user is not logged in

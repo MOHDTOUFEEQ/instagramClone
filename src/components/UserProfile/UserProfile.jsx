@@ -129,7 +129,7 @@ function UserProfile() {
     try {
       document.querySelector(".hiddeeeen").style.filter = "blur(3px)";
       setShowFollowers((val) => !val);
-      const followers_list = profileInfo.followersList;
+      const followers_list = profileInfo.followersList || [];
   
       // Create an array to store the user information for each follower
       const followersInfo = [];
@@ -151,7 +151,6 @@ function UserProfile() {
           // Add other properties as needed
         });
       }
-  setFollowingList
       setFollowersInfo(followersInfo);
     } catch (error) {
       console.error("Error fetching followers:", error);
@@ -162,11 +161,11 @@ function UserProfile() {
     try {
       document.querySelector(".hiddeeeen").style.filter = "blur(3px)";
       setShowFollowing((val) => !val);
-      const followers_list = profileInfo.followingList;
-  
+      const followers_list = profileInfo.followingList || [];
+
       // Create an array to store the user information for each follower
       const followersInfo = [];
-  
+
       // Iterate over each follower
       for (const followerId of followers_list) {
         // Make a request to get user information for each follower
@@ -433,7 +432,7 @@ function UserProfile() {
       
           </div>
         <div className='followers_append_list'>
-        { followingList.length>0?
+        { followingInfo.length > 0 ?
              followingInfo.map((follower) => (
               <div className='followers_user_top' key={follower.userId}>
                 <div className='followers_user_dp'>

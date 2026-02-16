@@ -44,7 +44,6 @@ function Postform({ post }) {
         }
       }
     } catch (error) {
-      console.log("Please don't use any commas, colons, or special characters in the title. Updates coming soon!");
     }
   };
 

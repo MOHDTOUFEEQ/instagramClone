@@ -20,7 +20,6 @@ function Onlymessages({ id, name, profile, profile1 }) {
         setSortedMessages(sortedMessages);
       }
     } catch (error) {
-      console.error("Error fetching messages:", error);
     }
   };
 
@@ -44,7 +43,6 @@ function Onlymessages({ id, name, profile, profile1 }) {
       await service.addMessage(newMessage);
       setMessageInput('');
     } catch (error) {
-      console.error("Error sending message:", error);
     }
   };
 

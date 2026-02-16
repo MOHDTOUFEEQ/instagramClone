@@ -27,10 +27,8 @@ function SearchSm() {
           if (getting_user) {
             setSearchUser(() => getting_user.documents);
           } else {
-            console.log("no user found");
           }
         } catch (error) {
-          console.error("Error fetching user:", error);
         }
       }
     };

@@ -98,9 +98,8 @@ function Postcard({ post = {} }) {
               <img
                 className="h-8 w-8 rounded-full"
                 src={
-                  post.ProfilePic
-                    ? service.getFilePreview(post.ProfilePic)
-                    : "https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png"
+                  (post.ProfilePic && service.getFilePreview(post.ProfilePic)) ||
+                  "https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png"
                 }
                 alt="Profile"
               />
@@ -116,7 +115,7 @@ function Postcard({ post = {} }) {
           {/* Post Image */}
           <div style={{ position: "relative", overflow: "hidden", maxHeight: "450px" }}>
             <img
-              src={service.getFilePreview(post.featuredImage)}
+              src={service.getFilePreview(post.featuredImage) || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18'%3ENo image%3C/text%3E%3C/svg%3E"}
               className="w-full h-full object-contain"
               alt="Post"
             />

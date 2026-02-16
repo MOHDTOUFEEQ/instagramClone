@@ -22,3 +22,15 @@ A feature-rich social media platform built with **React.js**, **Tailwind CSS**, 
 3. Run the development server:
     ```bash
     npm run dev
+    ```
+
+## 🖼️ **Image preview (Appwrite free tier)**
+
+For post and profile images to load, your Appwrite storage bucket must allow **public read** access (works on the free tier):
+
+1. Open **Appwrite Console** → **Storage** → select your bucket.
+2. Go to **Settings** (or **Permissions**).
+3. Under **Permissions**, add: **Role** `Any` with **Read** access.
+4. Save.
+
+After this, `getFileView` URLs will load in the browser without authentication and images will display correctly.

@@ -39,7 +39,7 @@ function UserBlogs({id}) {
                         height: '345px', // Default height for larger screens
                       }}
                       className="w-full h-full object-cover"
-                      src={service.getFilePreview(e.featuredImage)}
+                      src={service.getFilePreview(e.featuredImage) || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18'%3ENo image%3C/text%3E%3C/svg%3E"}
                       alt="image"
                     />
                     <div className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute left-0 top-0 ">

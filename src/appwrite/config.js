@@ -296,14 +296,22 @@ import { Client, Storage , ID , Databases, Query } from "appwrite";
     }
   
       
-    getFilePreview(fileID){
+    /**
+     * Get a URL to display a storage file (image) in the browser.
+     * Uses getFileView – works with Appwrite free tier when the bucket
+     * has "Any" read permission (Bucket → Settings → Permissions → add read("any")).
+     */
+    getFilePreview(fileID) {
+        if (!fileID) return null;
         try {
-            return  this.bucket.getFilePreview(
-                conf.appwriteBucketId,    
+            const url = this.bucket.getFileView(
+                conf.appwriteBucketId,
                 fileID
-            )
+            );
+            return url ? url.href : null;
         } catch (error) {
             console.log("error in getFilePreview", error);
+            return null;
         }
     }
     async getFileDownloadURL(fileID) {
@@ -325,14 +333,17 @@ import { Client, Storage , ID , Databases, Query } from "appwrite";
         }
       }
       
-    getFile(fileID){
+    getFile(fileID) {
+        if (!fileID) return null;
         try {
-            return  this.bucket.getFile(
-                conf.appwriteBucketId,    
+            const url = this.bucket.getFileView(
+                conf.appwriteBucketId,
                 fileID
-            )
+            );
+            return url ? url.href : null;
         } catch (error) {
-            console.log("error in getFilePreview", error);
+            console.log("error in getFile", error);
+            return null;
         }
     }
     

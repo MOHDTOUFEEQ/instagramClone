@@ -30,7 +30,6 @@ function Chatting_mobile() {
           setFollowersInfo(resolvedFollowersInfo);
         }
       } catch (error) {
-        console.error("Error fetching followers:", error);
       }
     }
   

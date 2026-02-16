@@ -287,7 +287,7 @@ export const Header = () => {
               <div className="user_overall">
                 <div className="user_top">
                   {user.ProfilePic ? (
-                    <img src={service.getFilePreview(user.ProfilePic)} alt="" />
+                    <img src={service.getFilePreview(user.ProfilePic) || "https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png"} alt="" />
                   ) : (
                     <img src="https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png" alt="" />
                   )}
@@ -303,7 +303,7 @@ export const Header = () => {
               <div className="user_overall">
                 <div className="user_top">
                   {user.ProfilePic ? (
-                    <img src={service.getFilePreview(user.ProfilePic)} alt="" />
+                    <img src={service.getFilePreview(user.ProfilePic) || "https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png"} alt="" />
                   ) : (
                     <img src="https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png" alt="" />
                   )}

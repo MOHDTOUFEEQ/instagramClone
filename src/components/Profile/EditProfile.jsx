@@ -117,7 +117,7 @@ function EditProfile() {
                 
               <div className="shrink-0 mb-5">
                   {curr_user ? 
-                    <img className="h-20 w-20 object-cover rounded-full"  src={service.getFilePreview(curr_user.ProfilePic)} alt="Current profile photo" /> :   
+                    <img className="h-20 w-20 object-cover rounded-full"  src={service.getFilePreview(curr_user.ProfilePic) || "https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png"} alt="Current profile photo" /> :   
                     <img className="h-20 w-20 object-cover rounded-full" src="https://sahilnetic.xyz/sahilnetic.png" alt="Current profile photo" /> 
                   }
                 </div>
